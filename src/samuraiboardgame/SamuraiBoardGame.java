@@ -6,13 +6,6 @@ import Sound.sound;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.*;
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.event.*;
-import javax.swing.*;
 
 /**********************************
  * This is the main class of a Java program to play a game based on hexagonal
@@ -24,21 +17,12 @@ import javax.swing.*;
  * 
  ***********************************/
 
-public class SamuraiBoardGame {
+public final class SamuraiBoardGame {
     static int numRice;
     static int numBuddah;
     static int numHelm;
 
     JFrame frame = new JFrame("Samurai");
-
-    // constants and global variables
-    static Color blue = new Color(109, 197, 232);
-
-    final static Color COLOURGRID = Color.BLACK;
-    final static Color COLOURONE = new Color(255, 255, 255, 200);
-    final static Color COLOURONETXT = Color.BLUE;
-    final static Color COLOURTWO = new Color(0, 0, 0, 200);
-    final static Color COLOURTWOTXT = new Color(255, 100, 255);
 
     final static int BWIDTH = 100; // board size.
     final static int BHEIGHT = 25;
@@ -52,14 +36,10 @@ public class SamuraiBoardGame {
 
     int widen = 2;
     boolean help = false;
-    boolean menu;
     boolean first = true;
     boolean startScreen = true;
 
-    sound bgSound = null;
-
     int boardshift = 14;
-    int boardshiftdown = 0;
 
     static Image Background;
     static Image title;
@@ -75,7 +55,6 @@ public class SamuraiBoardGame {
     Piece chosen = new Piece(Piece.pieceType.none, 0);
     int lastChosen;
     boolean gameOver = false;
-    int cities;
 
     // player variables
     int numPiecesPerPlayer = 5;
