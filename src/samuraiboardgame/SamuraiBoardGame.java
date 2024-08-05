@@ -2,10 +2,9 @@
 //updated 11/10/2015
 package samuraiboardgame;
 
-import Sound.sound;
 import java.awt.*;
-import javax.swing.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 /**********************************
  * This is the main class of a Java program to play a game based on hexagonal
@@ -92,15 +91,13 @@ public final class SamuraiBoardGame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new SamuraiBoardGame();
-            }
+        SwingUtilities.invokeLater(() -> {
+            new SamuraiBoardGame();
         });
     }
 
     Piece randomPiecesForPlayers(int playerNum) {
-        int num = (int) (Math.random() * 20) + 1;
+        int num;
         if (playerNum == 1) {
             boolean i = true;
             while (i) {
@@ -256,18 +253,24 @@ public final class SamuraiBoardGame {
     }
 
     void startGame() {
-        if (numPlayers == 2) {
-            numRice = 5;
-            numHelm = 4;
-            numBuddah = 5;
-        } else if (numPlayers == 3) {
-            numRice = 8;
-            numHelm = 7;
-            numBuddah = 8;
-        } else if (numPlayers == 4) {
-            numRice = 10;
-            numHelm = 10;
-            numBuddah = 10;
+        switch (numPlayers) {
+            case 2 -> {
+                numRice = 5;
+                numHelm = 4;
+                numBuddah = 5;
+            }
+            case 3 -> {
+                numRice = 8;
+                numHelm = 7;
+                numBuddah = 8;
+            }
+            case 4 -> {
+                numRice = 10;
+                numHelm = 10;
+                numBuddah = 10;
+            }
+            default -> {
+            }
         }
 
         for (int i = 0; i < BWIDTH; i++) {
@@ -302,45 +305,7 @@ public final class SamuraiBoardGame {
                 }
             }
         }
-        //// if(numRice != 0)
-        //// {
-        //// if(numPlayers == 2)
-        //// {
-        //// numRice = 6;
-        //// numHelm = 6;
-        //// numBuddah = 6;
-        //// }
-        //// city.setResource();
-        //// }
-        //// else if(numHelm != 0)
-        //// {
-        //// if(numPlayers == 2)
-        //// {
-        //// numRice = 6;
-        //// numHelm = 6;
-        //// numBuddah = 6;
-        //// }
-        //// city.setResource();
-        //// }
-        //// else if(numBuddah != 0)
-        //// {
-        //// if(numPlayers == 2)
-        //// {
-        //// numRice = 6;
-        //// numHelm = 6;
-        //// numBuddah = 6;
-        //// }
-        //// city.setResource();
-        //// }
-        //
-        //
-        // }
-        // }
-        // }
-
     }
-
-    int rand = (int) (Math.random() * 3) + 1;
 
     void Island() {
         if (numPlayers > 1) {
@@ -928,25 +893,6 @@ public final class SamuraiBoardGame {
 
     }
 
-    // if(p.x % 2 == 0 )
-    // {
-    // System.out.println(board[p.x-1][p.y].getClass());
-    // System.out.println(board[p.x-1][p.y-1].getClass());
-    // System.out.println(board[p.x][p.y+1].getClass());
-    // System.out.println(board[p.x][p.y-1].getClass());
-    // System.out.println(board[p.x+1][p.y].getClass());
-    // System.out.println(board[p.x+1][p.y-1].getClass());
-    //
-    // }
-    // else
-    // {
-    // System.out.println(board[p.x-1][p.y+1].getClass());
-    // System.out.println(board[p.x-1][p.y].getClass());
-    // System.out.println(board[p.x][p.y+1].getClass());
-    // System.out.println(board[p.x][p.y-1].getClass());
-    // System.out.println(board[p.x+1][p.y+1].getClass());
-    // System.out.println(board[p.x+1][p.y].getClass());
-    // }
     public void checkSurround(int x, int y) {
         if (x % 2 == 0)
 
@@ -968,7 +914,7 @@ public final class SamuraiBoardGame {
                     (board[x + 1][y - 1] instanceof Terrain
                             && ((Terrain) board[x + 1][y - 1]).getTerrainType() == Terrain.terrainType.land)) {
                 // return(false);
-                return;
+
             } else {
                 if (!((City) board[x][y]).captured)
                     checkCapture(x, y);
@@ -991,16 +937,13 @@ public final class SamuraiBoardGame {
                     (board[x + 1][y] instanceof Terrain
                             && ((Terrain) board[x + 1][y]).getTerrainType() == Terrain.terrainType.land)) {
                 // return(false);
-                return;
+
             } else {
                 if (!((City) board[x][y]).captured)
                     checkCapture(x, y);
             }
 
         }
-        // return(true);
-        // checkCapture(x,y);
-
     }
 
     class DrawingPanel extends JPanel {
@@ -1017,6 +960,7 @@ public final class SamuraiBoardGame {
             // addMouseMotionListener(m2);
         }
 
+        @Override
         public void paintComponent(Graphics g) {
 
             Graphics2D g2 = (Graphics2D) g;
@@ -1410,6 +1354,7 @@ public final class SamuraiBoardGame {
         }
 
         class MyMouseListener extends MouseAdapter { // inner class inside DrawingPanel
+            @Override
             public void mouseReleased(MouseEvent e) {
                 int x = e.getX();
                 int y = e.getY();
