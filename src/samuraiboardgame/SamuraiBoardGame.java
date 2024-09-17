@@ -2,15 +2,7 @@
 //updated 11/10/2015
 package samuraiboardgame;
 
-import Sound.sound;
 import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.*;
-import java.awt.*;
-import java.awt.geom.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -24,21 +16,12 @@ import javax.swing.*;
  * 
  ***********************************/
 
-public class SamuraiBoardGame {
+public final class SamuraiBoardGame {
     static int numRice;
     static int numBuddah;
     static int numHelm;
 
     JFrame frame = new JFrame("Samurai");
-
-    // constants and global variables
-    static Color blue = new Color(109, 197, 232);
-
-    final static Color COLOURGRID = Color.BLACK;
-    final static Color COLOURONE = new Color(255, 255, 255, 200);
-    final static Color COLOURONETXT = Color.BLUE;
-    final static Color COLOURTWO = new Color(0, 0, 0, 200);
-    final static Color COLOURTWOTXT = new Color(255, 100, 255);
 
     final static int BWIDTH = 100; // board size.
     final static int BHEIGHT = 25;
@@ -52,14 +35,10 @@ public class SamuraiBoardGame {
 
     int widen = 2;
     boolean help = false;
-    boolean menu;
     boolean first = true;
     boolean startScreen = true;
 
-    sound bgSound = null;
-
     int boardshift = 14;
-    int boardshiftdown = 0;
 
     static Image Background;
     static Image title;
@@ -75,7 +54,6 @@ public class SamuraiBoardGame {
     Piece chosen = new Piece(Piece.pieceType.none, 0);
     int lastChosen;
     boolean gameOver = false;
-    int cities;
 
     // player variables
     int numPiecesPerPlayer = 5;
@@ -113,15 +91,13 @@ public class SamuraiBoardGame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new SamuraiBoardGame();
-            }
+        SwingUtilities.invokeLater(() -> {
+            new SamuraiBoardGame();
         });
     }
 
     Piece randomPiecesForPlayers(int playerNum) {
-        int num = (int) (Math.random() * 20) + 1;
+        int num;
         if (playerNum == 1) {
             boolean i = true;
             while (i) {
@@ -277,18 +253,24 @@ public class SamuraiBoardGame {
     }
 
     void startGame() {
-        if (numPlayers == 2) {
-            numRice = 5;
-            numHelm = 4;
-            numBuddah = 5;
-        } else if (numPlayers == 3) {
-            numRice = 8;
-            numHelm = 7;
-            numBuddah = 8;
-        } else if (numPlayers == 4) {
-            numRice = 10;
-            numHelm = 10;
-            numBuddah = 10;
+        switch (numPlayers) {
+            case 2 -> {
+                numRice = 5;
+                numHelm = 4;
+                numBuddah = 5;
+            }
+            case 3 -> {
+                numRice = 8;
+                numHelm = 7;
+                numBuddah = 8;
+            }
+            case 4 -> {
+                numRice = 10;
+                numHelm = 10;
+                numBuddah = 10;
+            }
+            default -> {
+            }
         }
 
         for (int i = 0; i < BWIDTH; i++) {
@@ -323,45 +305,7 @@ public class SamuraiBoardGame {
                 }
             }
         }
-        //// if(numRice != 0)
-        //// {
-        //// if(numPlayers == 2)
-        //// {
-        //// numRice = 6;
-        //// numHelm = 6;
-        //// numBuddah = 6;
-        //// }
-        //// city.setResource();
-        //// }
-        //// else if(numHelm != 0)
-        //// {
-        //// if(numPlayers == 2)
-        //// {
-        //// numRice = 6;
-        //// numHelm = 6;
-        //// numBuddah = 6;
-        //// }
-        //// city.setResource();
-        //// }
-        //// else if(numBuddah != 0)
-        //// {
-        //// if(numPlayers == 2)
-        //// {
-        //// numRice = 6;
-        //// numHelm = 6;
-        //// numBuddah = 6;
-        //// }
-        //// city.setResource();
-        //// }
-        //
-        //
-        // }
-        // }
-        // }
-
     }
-
-    int rand = (int) (Math.random() * 3) + 1;
 
     void Island() {
         if (numPlayers > 1) {
@@ -949,25 +893,6 @@ public class SamuraiBoardGame {
 
     }
 
-    // if(p.x % 2 == 0 )
-    // {
-    // System.out.println(board[p.x-1][p.y].getClass());
-    // System.out.println(board[p.x-1][p.y-1].getClass());
-    // System.out.println(board[p.x][p.y+1].getClass());
-    // System.out.println(board[p.x][p.y-1].getClass());
-    // System.out.println(board[p.x+1][p.y].getClass());
-    // System.out.println(board[p.x+1][p.y-1].getClass());
-    //
-    // }
-    // else
-    // {
-    // System.out.println(board[p.x-1][p.y+1].getClass());
-    // System.out.println(board[p.x-1][p.y].getClass());
-    // System.out.println(board[p.x][p.y+1].getClass());
-    // System.out.println(board[p.x][p.y-1].getClass());
-    // System.out.println(board[p.x+1][p.y+1].getClass());
-    // System.out.println(board[p.x+1][p.y].getClass());
-    // }
     public void checkSurround(int x, int y) {
         if (x % 2 == 0)
 
@@ -989,7 +914,7 @@ public class SamuraiBoardGame {
                     (board[x + 1][y - 1] instanceof Terrain
                             && ((Terrain) board[x + 1][y - 1]).getTerrainType() == Terrain.terrainType.land)) {
                 // return(false);
-                return;
+
             } else {
                 if (!((City) board[x][y]).captured)
                     checkCapture(x, y);
@@ -1012,16 +937,13 @@ public class SamuraiBoardGame {
                     (board[x + 1][y] instanceof Terrain
                             && ((Terrain) board[x + 1][y]).getTerrainType() == Terrain.terrainType.land)) {
                 // return(false);
-                return;
+
             } else {
                 if (!((City) board[x][y]).captured)
                     checkCapture(x, y);
             }
 
         }
-        // return(true);
-        // checkCapture(x,y);
-
     }
 
     class DrawingPanel extends JPanel {
@@ -1038,6 +960,7 @@ public class SamuraiBoardGame {
             // addMouseMotionListener(m2);
         }
 
+        @Override
         public void paintComponent(Graphics g) {
 
             Graphics2D g2 = (Graphics2D) g;
@@ -1228,15 +1151,15 @@ public class SamuraiBoardGame {
                     // highlighting letters once clicked
                     g2.setColor(Color.yellow);
                     if (numPlayers == 2) {
-                        g.drawString("2", 639, 260);
+                        g.drawString("2", 574, 260);
 
                     }
                     if (numPlayers == 3) {
-                        g.drawString("3", 667, 260);
+                        g.drawString("3", 597, 260);
 
                     }
                     if (numPlayers == 4) {
-                        g.drawString("4", 695, 260);
+                        g.drawString("4", 619, 260);
 
                     }
                 }
@@ -1431,6 +1354,7 @@ public class SamuraiBoardGame {
         }
 
         class MyMouseListener extends MouseAdapter { // inner class inside DrawingPanel
+            @Override
             public void mouseReleased(MouseEvent e) {
                 int x = e.getX();
                 int y = e.getY();
@@ -1438,14 +1362,15 @@ public class SamuraiBoardGame {
                 System.out.println(x + " X \\ Y " + y);
                 // System.out.println(x+ " X | Y " + y);
                 if (startScreen) {
-                    if (638 < x && x < 655 && 243 < y && y < 265) {
+                    if (564 < x && x < 584 && 243 < y && y < 265) {
                         numPlayers = 2;
-                    } else if (665 < x && x < 685 && 243 < y && y < 265) {
+                    } else if (587 < x && x < 607 && 243 < y && y < 265) {
                         numPlayers = 3;
-                    } else if (693 < x && x < 711 && 243 < y && y < 265) {
+                    } else if (609 < x && x < 629 && 243 < y && y < 265) {
                         numPlayers = 4;
                     }
                     if (x > 20 && x < 270 && y > 400 && y < 470) {
+                        System.out.println("help pressed");
                         // JFrame rules = new JFrame("Samurai");
                         help = true;
                         // rules.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
