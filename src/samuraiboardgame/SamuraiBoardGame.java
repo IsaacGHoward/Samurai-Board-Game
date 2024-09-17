@@ -1151,15 +1151,15 @@ public final class SamuraiBoardGame {
                     // highlighting letters once clicked
                     g2.setColor(Color.yellow);
                     if (numPlayers == 2) {
-                        g.drawString("2", 639, 260);
+                        g.drawString("2", 574, 260);
 
                     }
                     if (numPlayers == 3) {
-                        g.drawString("3", 667, 260);
+                        g.drawString("3", 597, 260);
 
                     }
                     if (numPlayers == 4) {
-                        g.drawString("4", 695, 260);
+                        g.drawString("4", 619, 260);
 
                     }
                 }
@@ -1362,14 +1362,15 @@ public final class SamuraiBoardGame {
                 System.out.println(x + " X \\ Y " + y);
                 // System.out.println(x+ " X | Y " + y);
                 if (startScreen) {
-                    if (638 < x && x < 655 && 243 < y && y < 265) {
+                    if (564 < x && x < 584 && 243 < y && y < 265) {
                         numPlayers = 2;
-                    } else if (665 < x && x < 685 && 243 < y && y < 265) {
+                    } else if (587 < x && x < 607 && 243 < y && y < 265) {
                         numPlayers = 3;
-                    } else if (693 < x && x < 711 && 243 < y && y < 265) {
+                    } else if (609 < x && x < 629 && 243 < y && y < 265) {
                         numPlayers = 4;
                     }
                     if (x > 20 && x < 270 && y > 400 && y < 470) {
+                        System.out.println("help pressed");
                         // JFrame rules = new JFrame("Samurai");
                         help = true;
                         // rules.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );

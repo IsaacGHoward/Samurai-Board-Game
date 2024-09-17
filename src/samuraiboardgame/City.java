@@ -4,7 +4,6 @@
  */
 package samuraiboardgame;
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 /**
  *
@@ -175,7 +174,6 @@ public class City extends Hex {
     public void setCity(int _city, int i )
     {
         cityResource[i] = _city;
-        //System.out.println(cityResource);
     }
     public int getResource(int i)
     {
@@ -191,21 +189,6 @@ public class City extends Hex {
          
          if(cityT == cityType.capital)
              return(Color.YELLOW);
-         
-//         if(cityResource == RICE)
-//             return(Color.white);
-//         else if(cityResource == HELMET)
-//             return(Color.BLUE);
-//         else if(cityResource == BUDDAH)
-//             return(Color.ORANGE);
-//         else if(cityResource == RICEHELM)
-//             return(Color.MAGENTA);
-//         else if(cityResource == RICEBUDDAH)
-//             return(Color.pink);
-//         else if(cityResource == HELMBUDDAH)
-//             return(Color.GREEN);
-//         else if(cityResource == ALL)
-//             return(Color.RED);
            return(city);
     }
     
